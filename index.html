@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversational Agent</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #141E30, #243B55);
+            font-family: 'Poppins', sans-serif;
+            color: white;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 { 
+            font-size: 1.8rem; 
+            margin-bottom: 1rem; 
+            text-align: center; 
+        }
+
+        #chat-log {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding-right: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Animation 1: Chat messages slide in --- */
+        .chat-message {
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            max-width: 80%;
+            word-wrap: break-word;
+            animation: slideIn 0.3s ease-out; /* This applies the animation */
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-message {
+            background: #6c63ff;
+            margin-left: auto;
+            align-self: flex-end;
+        }
+
+        .agent-message {
+            background: #4a5568;
+            margin-right: auto;
+            align-self: flex-start;
+        }
+
+        #controls {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #main-button {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(to right, #10b981, #059669);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #main-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- Animation 2: Recording button pulses --- */
+        #main-button.btn-recording {
+            background: linear-gradient(to right, #dc2626, #b91c1c);
+            animation: pulse 1.5s infinite; /* This applies the animation */
+        }
+
+        #main-button:disabled {
+            background: #4a5568;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+        }
+
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎙️ Conversational Agent</h1>
+        <div id="chat-log">
+            <!-- Chat messages will be added here by JavaScript -->
+        </div>
+        <div id="controls">
+            <button id="main-button">
+                <!-- Button content (icon/spinner) will be controlled by JavaScript -->
+            </button>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>

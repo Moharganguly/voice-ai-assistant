@@ -1,0 +1,57 @@
+from fastapi import FastAPI
+from pydantic import BaseModel
+from dotenv import load_dotenv
+import os
+import requests
+
+load_dotenv()
+app = FastAPI()
+
+MURF_API_KEY = os.getenv("MURF_API_KEY")
+MURF_API_URL = MURF_API_URL = "https://api.murf.ai/v1/speech/generate"
+
+
+class TextInput(BaseModel):
+    text: str
+
+@app.post("/generate-audio")
+async def generate_audio(data: TextInput):
+    headers = {
+        "api-key": MURF_API_KEY,
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "voice_id": "en-US-Wavenet-D",  # Try this as a guess
+        "text": data.text,
+        "speed": 1.0,
+        "pitch": 1.0
+    }
+
+    try:
+        response = requests.post(MURF_API_URL, headers=headers, json=payload)
+
+        print("DEBUG: Status", response.status_code)
+        print("DEBUG: Body", response.text)
+
+        if response.status_code == 200:
+            result = response.json()
+            return {"audio_url": result.get("audio_url")}
+        else:
+            return {
+                "error": "Failed to generate audio",
+                "status_code": response.status_code,
+                "details": response.text
+            }
+    except Exception as e:
+        return {"error": str(e)}
+
+    else:
+        
+        print("DEBUG Murf response:", response.text)
+        return {
+            "error": "Failed to generate audio",
+            "status_code": response.status_code,
+            "details": response.text
+        }
+

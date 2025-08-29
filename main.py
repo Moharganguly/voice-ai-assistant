@@ -32,9 +32,9 @@ session_api_keys = {}  # NEW: Store API keys per session
 
 # Default API keys (fallback)
 DEFAULT_API_KEYS = {
-    "gemini": os.getenv("GEMINI_API_KEY", "AIzaSyBjTjD8pz4ojgdGxtUmCYStLospn0d1Sg4"),
-    "openweather": os.getenv("OPENWEATHER_API_KEY", "1334112c8e50dbfc03995a71404c40d5"),
-    "tavily": os.getenv("TAVILY_API_KEY", "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")
+    "gemini": os.getenv("GEMINI_API_KEY", ""),
+    "openweather": os.getenv("OPENWEATHER_API_KEY", ""),
+    "tavily": os.getenv("TAVILY_API_KEY", "")
 }
 
 # ---- ENHANCED SKILL FUNCTIONS WITH DYNAMIC API KEYS ----

@@ -1305,18 +1305,24 @@
             <div class="sound-bar"></div>
           </div>
 
-          <!-- NEW: Text Input Section -->
+          <!-- Text Input with Mobile Landscape Fix -->
           <div class="text-input-container" style="margin-top: 25px">
             <div
               class="input-group"
-              style="display: flex; gap: 12px; align-items: center"
+              style="
+                display: flex;
+                gap: 12px;
+                align-items: stretch;
+                flex-wrap: nowrap;
+              "
             >
               <input
                 type="text"
                 id="textInput"
                 placeholder="Or type your message here..."
                 style="
-                  flex: 1;
+                  flex: 1 1 auto;
+                  min-width: 0;
                   padding: 16px 20px;
                   border: 2px solid var(--primary-blue);
                   border-radius: 25px;
@@ -1330,7 +1336,9 @@
               <button
                 id="textSendButton"
                 style="
-                  padding: 16px 24px;
+                  flex-shrink: 0;
+                  white-space: nowrap;
+                  padding: 16px 20px;
                   background: linear-gradient(
                     135deg,
                     var(--primary-blue),
@@ -1342,7 +1350,8 @@
                   font-weight: 600;
                   cursor: pointer;
                   transition: all 0.3s ease;
-                  white-space: nowrap;
+                  min-width: 80px;
+                  max-width: 120px;
                 "
               >
                 Send 📤

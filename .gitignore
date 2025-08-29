@@ -233,7 +233,7 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
- c3485741795d0ef61d99858486ad87542156677b
+
 # API Keys and Secrets
 *.key
 *.pem

@@ -1,9 +1,9 @@
-// Enhanced Voice AI Assistant v2.0 - Complete Implementation
+// Enhanced Voice AI Assistant v2.0 - Complete Implementation with Text Input
 let ws;
 let sessionId = null;
 let conversationHistory = [];
 
-// UI references - Updated for new interface
+// UI references - Updated for new interface with text input
 const recordButton = document.getElementById("record-button");
 const buttonIcon = document.getElementById("button-icon");
 const statusText = document.getElementById("status-text");
@@ -16,6 +16,10 @@ const personaSelect = document.getElementById("persona");
 const historyContainer = document.getElementById("history-container");
 const clearHistoryBtn = document.getElementById("clear-history-btn");
 const audioStatus = document.getElementById("audio-status");
+
+// NEW: Text input UI references
+const textInput = document.getElementById("textInput");
+const textSendButton = document.getElementById("textSendButton");
 
 // State management
 let recognition = null;
@@ -42,7 +46,7 @@ function updateButtonState(state) {
     case "idle":
       buttonIcon.textContent = "🎤";
       statusText.textContent = "Ready to Listen";
-      statusSubtext.textContent = "Click the microphone to start recording";
+      statusSubtext.textContent = "Click the microphone or type your message";
       break;
       
     case "recording":
@@ -74,6 +78,35 @@ function updateButtonState(state) {
   }
 }
 
+// NEW: Text Input Function
+function sendTextMessage() {
+  const message = textInput.value.trim();
+  if (!message) return;
+
+  console.log("📝 Sending text message:", message);
+  
+  // Show the user's message in the UI
+  currentUserMessage = message;
+  userTranscriptText.textContent = message;
+  transcriptContainer.classList.remove("hidden");
+  
+  // Send via WebSocket to your backend
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify({ 
+      type: "user_transcript", 
+      text: message 
+    }));
+    updateButtonState("processing");
+  } else {
+    userTranscriptText.textContent = "Connection error. Please try again.";
+    updateButtonState("error");
+    setTimeout(() => updateButtonState("idle"), 3000);
+  }
+  
+  // Clear the input field
+  textInput.value = "";
+}
+
 // ---- History Management ----
 function addToHistory(userMessage, botMessage, persona) {
   const timestamp = new Date().toLocaleTimeString();
@@ -95,7 +128,7 @@ function addToHistory(userMessage, botMessage, persona) {
 
 function updateHistoryDisplay() {
   if (conversationHistory.length === 0) {
-    historyContainer.innerHTML = "No conversations yet. Configure your API keys and start talking!";
+    historyContainer.innerHTML = "No conversations yet. Configure your API keys and start talking or typing!";
     return;
   }
   
@@ -700,6 +733,31 @@ recordButton.addEventListener("click", async () => {
   }
 });
 
+// NEW: Text Input Event Listeners
+if (textSendButton) {
+  textSendButton.addEventListener("click", sendTextMessage);
+}
+
+if (textInput) {
+  textInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      sendTextMessage();
+    }
+  });
+  
+  // Add focus styling
+  textInput.addEventListener("focus", () => {
+    textInput.style.borderColor = "var(--secondary-blue)";
+    textInput.style.boxShadow = "0 0 0 3px rgba(37, 99, 235, 0.1)";
+  });
+  
+  textInput.addEventListener("blur", () => {
+    textInput.style.borderColor = "var(--primary-blue)";
+    textInput.style.boxShadow = "none";
+  });
+}
+
 personaSelect.addEventListener("change", (e) => {
   const persona = e.target.value;
   if (ws && ws.readyState === WebSocket.OPEN) {
@@ -776,9 +834,15 @@ document.addEventListener("keydown", (event) => {
     event.preventDefault();
     recordButton.click();
   }
+  
+  // NEW: Focus text input with 't' key
+  if (event.key === "t" && textInput && document.activeElement !== textInput) {
+    event.preventDefault();
+    textInput.focus();
+  }
 });
 
 // ---- Initialize ----
 window.addEventListener("load", init);
 
-console.log("📄 Enhanced Voice Agent v2.0 System Loaded Successfully! 🚀");
+console.log("📄 Enhanced Voice Agent v2.0 with Text Input Loaded Successfully! 🚀");

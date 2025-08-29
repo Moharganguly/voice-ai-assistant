@@ -1,4 +1,7 @@
-fastapi
-uvicorn
-python-multipart
-requests
+fastapi==0.104.1
+uvicorn==0.24.0
+websockets==12.0
+requests==2.31.0
+google-generativeai==0.3.1
+python-multipart==0.0.6
+psutil==5.9.6

@@ -3,153 +3,1264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conversational Agent</title>
+    <title>Enhanced Voice AI Assistant v2.0</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-        
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --secondary-blue: #3b82f6;
+            --success-green: #10b981;
+            --warning-orange: #f59e0b;
+            --error-red: #ef4444;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-light: #e5e7eb;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-glass: rgba(255, 255, 255, 0.95);
         }
 
         body {
-            height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gradient-primary);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #141E30, #243B55);
-            font-family: 'Poppins', sans-serif;
-            color: white;
+            padding: 20px;
+            overflow-x: hidden;
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            width: 90%;
-            max-width: 500px;
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        h1 { 
-            font-size: 1.8rem; 
-            margin-bottom: 1rem; 
-            text-align: center; 
-        }
-
-        #chat-log {
-            flex-grow: 1;
-            overflow-y: auto;
-            margin-bottom: 1rem;
-            padding-right: 1rem;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* --- Animation 1: Chat messages slide in --- */
-        .chat-message {
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            margin-bottom: 0.75rem;
-            max-width: 80%;
-            word-wrap: break-word;
-            animation: slideIn 0.3s ease-out; /* This applies the animation */
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .user-message {
-            background: #6c63ff;
-            margin-left: auto;
-            align-self: flex-end;
-        }
-
-        .agent-message {
-            background: #4a5568;
-            margin-right: auto;
-            align-self: flex-start;
-        }
-
-        #controls {
-            flex-shrink: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        #main-button {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: linear-gradient(to right, #10b981, #059669);
-            border: none;
-            cursor: pointer;
+        .app-container {
+            background: var(--gradient-glass);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 600px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
+        }
+
+        /* Animated background particles */
+        .app-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 50%);
+            animation: rotate 25s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Header with settings button */
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .settings-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+
+        .settings-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .version-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: min(400px, 90vw);
+            height: 100vh;
+            background: var(--bg-white);
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .settings-panel.open {
+            right: 0;
+        }
+
+        .settings-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+        }
+
+        .settings-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .close-settings {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .close-settings:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .settings-content {
+            padding: 30px 20px;
+        }
+
+        .api-key-section {
+            margin-bottom: 30px;
+        }
+
+        .api-key-section h3 {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            margin-bottom: 16px;
             display: flex;
-            justify-content: center;
             align-items: center;
+            gap: 8px;
         }
 
-        #main-button:hover {
-            transform: scale(1.1);
+        .api-status {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-secondary);
         }
 
-        /* --- Animation 2: Recording button pulses --- */
-        #main-button.btn-recording {
-            background: linear-gradient(to right, #dc2626, #b91c1c);
-            animation: pulse 1.5s infinite; /* This applies the animation */
-        }
-
-        #main-button:disabled {
-            background: #4a5568;
-            cursor: not-allowed;
-            transform: scale(1);
+        .api-status.configured {
+            background: var(--success-green);
+            animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
-        .spinner {
-            width: 30px;
-            height: 30px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
+        .api-input-group {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .api-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+
+        .api-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .api-input::placeholder {
+            color: var(--text-secondary);
+            font-family: inherit;
+        }
+
+        .api-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .api-link {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .api-link:hover {
+            text-decoration: underline;
+        }
+
+        .save-settings-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--success-green), #059669);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .save-settings-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .save-settings-btn:disabled {
+            background: var(--text-secondary);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Settings overlay */
+        .settings-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .settings-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Main content */
+        .content {
+            padding: 30px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* API Status Bar */
+        .api-status-bar {
+            background: linear-gradient(135deg, var(--bg-light), var(--bg-white));
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-indicators {
+            display: flex;
+            gap: 12px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            background: var(--text-secondary);
+        }
+
+        .status-dot.active {
+            background: var(--success-green);
+        }
+
+        .configure-link {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .configure-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Persona section */
+        .persona-section {
+            margin-bottom: 25px;
+        }
+
+        .persona-section label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        #persona {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        #persona:focus {
+            border-color: var(--primary-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.15);
+        }
+
+        /* Enhanced Skills Showcase */
+        .skills-showcase {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid #bfdbfe;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skills-showcase::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary-blue), var(--secondary-blue), var(--success-green), var(--warning-orange), var(--primary-blue));
+            border-radius: 20px;
+            z-index: -1;
+            animation: borderGlow 6s linear infinite;
+            background-size: 400% 400%;
+        }
+
+        @keyframes borderGlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .skills-title {
+            color: var(--primary-blue);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+        }
+
+        .skill-item {
+            text-align: center;
+            color: var(--text-primary);
+            padding: 20px 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .skill-item:hover::before {
+            left: 100%;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.2);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .skill-item.premium {
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            background: linear-gradient(135deg, rgba(254, 243, 199, 0.9), rgba(253, 230, 138, 0.8));
+        }
+
+        .skill-item.premium:hover {
+            border-color: rgba(251, 191, 36, 0.5);
+            background: linear-gradient(135deg, rgba(254, 243, 199, 1), rgba(253, 230, 138, 0.9));
+            box-shadow: 0 20px 40px rgba(251, 191, 36, 0.3);
+        }
+
+        .skill-icon {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            display: block;
+            animation: iconFloat 4s ease-in-out infinite;
+        }
+
+        .premium .skill-icon {
+            animation: goldPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @keyframes goldPulse {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-4px) scale(1.1); }
+        }
+
+        .skill-name {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--primary-blue);
+        }
+
+        .premium .skill-name {
+            color: #d97706;
+        }
+
+        .skill-example {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        .premium .skill-example {
+            color: #92400e;
+            font-weight: 500;
+        }
+
+        .skills-note {
+            text-align: center;
+            margin-top: 20px;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+            border: 2px solid rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: #065f46;
+            font-weight: 600;
+            animation: noteGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes noteGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); }
+            50% { box-shadow: 0 0 25px rgba(16, 185, 129, 0.4); }
+        }
+
+        /* History section */
+        .history-section {
+            margin-bottom: 25px;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .history-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        #clear-history-btn {
+            padding: 10px 18px;
+            background: linear-gradient(135deg, var(--error-red), #dc2626);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        #clear-history-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+        }
+
+        #history-container {
+            background: linear-gradient(135deg, var(--bg-light), #f3f4f6);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 20px;
+            min-height: 120px;
+            max-height: 200px;
+            overflow-y: auto;
+            color: var(--text-secondary);
+            text-align: center;
+            font-style: italic;
+        }
+
+        .history-item {
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            text-align: left;
+            font-style: normal;
+            transition: all 0.3s ease;
+            transform: translateX(-10px);
+            opacity: 0;
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .history-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .history-user {
+            color: var(--primary-blue);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .history-bot {
+            color: var(--text-primary);
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .history-meta {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Voice section */
+        .voice-section {
+            text-align: center;
+            position: relative;
+        }
+
+        .voice-status {
+            margin-bottom: 30px;
+        }
+
+        .status-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .status-subtext {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Enhanced record button */
+        .record-button-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .record-button {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            font-size: 3.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 35px rgba(37, 99, 235, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .record-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 45px rgba(37, 99, 235, 0.4);
+        }
+
+        .record-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Pulse rings */
+        .pulse-ring {
+            position: absolute;
+            border: 3px solid var(--primary-blue);
+            border-radius: 50%;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .pulse-ring-1 {
+            width: 160px;
+            height: 160px;
+            animation: pulse-ring 2.5s ease-out infinite;
+        }
+
+        .pulse-ring-2 {
+            width: 180px;
+            height: 180px;
+            animation: pulse-ring 2.5s ease-out infinite;
+            animation-delay: 0.5s;
+        }
+
+        .pulse-ring-3 {
+            width: 200px;
+            height: 200px;
+            animation: pulse-ring 2.5s ease-out infinite;
+            animation-delay: 1s;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                opacity: 1;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.3);
+            }
+        }
+
+        /* Button states */
+        .record-button.recording {
+            background: linear-gradient(135deg, var(--error-red), #dc2626);
+            animation: recordingPulse 1s ease-in-out infinite alternate;
+        }
+
+        .recording .pulse-ring {
+            border-color: var(--error-red);
+            animation-duration: 1s;
+        }
+
+        @keyframes recordingPulse {
+            0% { transform: scale(1); box-shadow: 0 15px 35px rgba(239, 68, 68, 0.3); }
+            100% { transform: scale(1.05); box-shadow: 0 20px 45px rgba(239, 68, 68, 0.5); }
+        }
+
+        .record-button.processing {
+            background: linear-gradient(135deg, var(--warning-orange), #d97706);
+            animation: spin 2s linear infinite;
+        }
+
+        .processing .pulse-ring {
+            border-color: var(--warning-orange);
         }
 
         @keyframes spin {
+            from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
+        }
+
+        .record-button.speaking {
+            background: linear-gradient(135deg, var(--success-green), #059669);
+            animation: speakingGlow 2s ease-in-out infinite;
+        }
+
+        .speaking .pulse-ring {
+            border-color: var(--success-green);
+        }
+
+        @keyframes speakingGlow {
+            0%, 100% { box-shadow: 0 0 25px rgba(16, 185, 129, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.8); }
+        }
+
+        /* Sound visualizer */
+        .sound-visualizer {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 70px;
+            gap: 4px;
+            margin: 25px 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sound-visualizer.active {
+            opacity: 1;
+        }
+
+        .sound-bar {
+            width: 5px;
+            background: linear-gradient(to top, var(--primary-blue), var(--secondary-blue));
+            border-radius: 3px;
+            animation: soundWave 1.2s ease-in-out infinite;
+        }
+
+        .sound-bar:nth-child(1) { height: 25px; animation-delay: 0s; }
+        .sound-bar:nth-child(2) { height: 40px; animation-delay: 0.1s; }
+        .sound-bar:nth-child(3) { height: 55px; animation-delay: 0.2s; }
+        .sound-bar:nth-child(4) { height: 30px; animation-delay: 0.3s; }
+        .sound-bar:nth-child(5) { height: 60px; animation-delay: 0.4s; }
+        .sound-bar:nth-child(6) { height: 35px; animation-delay: 0.5s; }
+        .sound-bar:nth-child(7) { height: 45px; animation-delay: 0.6s; }
+        .sound-bar:nth-child(8) { height: 30px; animation-delay: 0.7s; }
+        .sound-bar:nth-child(9) { height: 40px; animation-delay: 0.8s; }
+        .sound-bar:nth-child(10) { height: 25px; animation-delay: 0.9s; }
+
+        @keyframes soundWave {
+            0%, 100% { transform: scaleY(0.3); }
+            50% { transform: scaleY(1); }
+        }
+
+        /* Instructions */
+        .instructions {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 1px solid #bfdbfe;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .instructions h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 16px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .instruction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .instruction-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            transition: transform 0.2s ease;
+        }
+
+        .instruction-item:hover {
+            transform: translateX(8px);
+        }
+
+        .instruction-icon {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            animation: iconBounce 3s ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        /* Result sections */
+        .result-section {
+            background: linear-gradient(135deg, var(--bg-light), #f3f4f6);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .result-header {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+
+        .result-content {
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 20px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            min-height: 70px;
+            white-space: pre-wrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.1), transparent);
+            animation: textShimmer 3s infinite;
+        }
+
+        @keyframes textShimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .audio-status {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border: 1px solid #a7f3d0;
+            color: #065f46;
+            padding: 14px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-top: 12px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .app-container {
+                margin: 10px;
+                max-width: 95vw;
+            }
+            
+            .content {
+                padding: 20px 15px;
+            }
+            
+            .record-button {
+                width: 120px;
+                height: 120px;
+                font-size: 3rem;
+            }
+            
+            .pulse-ring-1 { width: 140px; height: 140px; }
+            .pulse-ring-2 { width: 160px; height: 160px; }
+            .pulse-ring-3 { width: 180px; height: 180px; }
+            
+            .instruction-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 12px;
+            }
+
+            .settings-panel {
+                width: 95vw;
+            }
+        }
+
+        /* Success message */
+        .success-message {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border: 2px solid #10b981;
+            color: #065f46;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            animation: successPulse 0.5s ease;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(0.95); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎙️ Conversational Agent</h1>
-        <div id="chat-log">
-            <!-- Chat messages will be added here by JavaScript -->
+    <div class="app-container">
+        <div class="header">
+            <button class="settings-button" onclick="openSettings()">⚙️</button>
+            <div class="header-content">
+                <h1>🎤 Enhanced Voice AI Assistant</h1>
+                <p>Your personal AI with real-world superpowers</p>
+                <span class="version-badge">v2.0 - API Configurable</span>
+            </div>
         </div>
-        <div id="controls">
-            <button id="main-button">
-                <!-- Button content (icon/spinner) will be controlled by JavaScript -->
+        
+        <div class="content">
+            <!-- API Status Bar -->
+            <div class="api-status-bar">
+                <div class="status-indicators">
+                    <div class="status-indicator">
+                        <div class="status-dot" id="gemini-status"></div>
+                        <span>AI Chat</span>
+                    </div>
+                    <div class="status-indicator">
+                        <div class="status-dot" id="weather-status"></div>
+                        <span>Weather</span>
+                    </div>
+                    <div class="status-indicator">
+                        <div class="status-dot" id="search-status"></div>
+                        <span>Search</span>
+                    </div>
+                </div>
+                <a href="#" class="configure-link" onclick="openSettings()">Configure APIs</a>
+            </div>
+
+            <!-- Persona Selection -->
+            <div class="persona-section">
+                <label for="persona">AI Personality</label>
+                <select id="persona">
+                    <option value="friendly_teacher">👩‍🏫 Friendly Teacher</option>
+                    <option value="tech_support">👨‍💻 Tech Support Specialist</option>
+                    <option value="storyteller">📚 Creative Storyteller</option>
+                    <option value="default" selected>🤖 Default Assistant</option>
+                </select>
+            </div>
+
+            <!-- Enhanced Skills Showcase -->
+            <div class="skills-showcase">
+                <h4 class="skills-title">🚀 AI Superpowers Available</h4>
+                <div class="skills-grid">
+                    <div class="skill-item premium">
+                        <span class="skill-icon">🌤️</span>
+                        <div class="skill-name">Enhanced Weather</div>
+                        <div class="skill-example">"Weather forecast for Tokyo?"</div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-icon">🕐</span>
+                        <div class="skill-name">Time & Date</div>
+                        <div class="skill-example">"What time is it now?"</div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-icon">💻</span>
+                        <div class="skill-name">System Monitor</div>
+                        <div class="skill-example">"How's my system running?"</div>
+                    </div>
+                    <div class="skill-item premium">
+                        <span class="skill-icon">🔍</span>
+                        <div class="skill-name">Web Search</div>
+                        <div class="skill-example">"Search latest AI developments"</div>
+                    </div>
+                    <div class="skill-item premium">
+                        <span class="skill-icon">📰</span>
+                        <div class="skill-name">Live News</div>
+                        <div class="skill-example">"Get technology news today"</div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-icon">🤖</span>
+                        <div class="skill-name">AI Conversation</div>
+                        <div class="skill-example">"Tell me about quantum physics"</div>
+                    </div>
+                </div>
+                <div class="skills-note">
+                    🔑 Premium features available with API key configuration
+                </div>
+            </div>
+
+            <!-- History -->
+            <div class="history-section">
+                <div class="history-header">
+                    <h3>📜 Conversation History</h3>
+                    <button id="clear-history-btn">Clear All</button>
+                </div>
+                <div id="history-container">
+                    Welcome to your Enhanced Voice AI Assistant v2.0! Configure your API keys to unlock all superpowers.
+                </div>
+            </div>
+
+            <!-- Voice Control -->
+            <div class="voice-section">
+                <div class="voice-status">
+                    <div class="status-text" id="status-text">Ready to Listen</div>
+                    <div class="status-subtext" id="status-subtext">Click the microphone to start your conversation</div>
+                </div>
+
+                <!-- Enhanced Record Button -->
+                <div class="record-button-container" id="record-button-container">
+                    <div class="pulse-ring pulse-ring-1"></div>
+                    <div class="pulse-ring pulse-ring-2"></div>
+                    <div class="pulse-ring pulse-ring-3"></div>
+                    <button class="record-button" id="record-button" type="button">
+                        <span id="button-icon">🎤</span>
+                    </button>
+                </div>
+
+                <!-- Sound Visualizer -->
+                <div class="sound-visualizer" id="sound-visualizer">
+                    <div class="sound-bar"></div>
+                    <div class="sound-bar"></div>
+                    <div class="sound-bar"></div>
+                    <div class="sound-bar"></div>
+                    <div class="sound-bar"></div>
+                    <div class="sound-bar"></div>
+                    <div class="sound-bar"></div>
+                    <div class="sound-bar"></div>
+                    <div class="sound-bar"></div>
+                    <div class="sound-bar"></div>
+                </div>
+
+                <!-- Instructions -->
+                <div class="instructions">
+                    <h4>How to Use Your Enhanced AI v2.0</h4>
+                    <div class="instruction-grid">
+                        <div class="instruction-item">
+                            <span class="instruction-icon">🎤</span>
+                            Click to start recording
+                        </div>
+                        <div class="instruction-item">
+                            <span class="instruction-icon">⏹️</span>
+                            Click again to stop
+                        </div>
+                        <div class="instruction-item">
+                            <span class="instruction-icon">⚙️</span>
+                            Configure API keys for full power
+                        </div>
+                        <div class="instruction-item">
+                            <span class="instruction-icon">🎯</span>
+                            Ask about weather, news, or anything
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div id="transcript-container" class="result-section hidden">
+                <div class="result-header">
+                    <span>👤</span>
+                    You Said:
+                </div>
+                <div id="user-transcript-text" class="result-content"></div>
+            </div>
+
+            <div id="response-container" class="result-section hidden">
+                <div class="result-header">
+                    <span>🤖</span>
+                    AI Response:
+                </div>
+                <div id="llm-response-text" class="result-content"></div>
+                <div id="audio-status" class="audio-status hidden">
+                    🔊 Voice response ready
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div class="settings-overlay" onclick="closeSettings()"></div>
+    <div class="settings-panel" id="settings-panel">
+        <div class="settings-header">
+            <h2>⚙️ API Configuration</h2>
+            <p>Configure your API keys to unlock all features</p>
+            <button class="close-settings" onclick="closeSettings()">×</button>
+        </div>
+        <div class="settings-content">
+            <div id="success-message" class="success-message hidden">
+                ✅ API keys saved successfully!
+            </div>
+
+            <div class="api-key-section">
+                <h3>
+                    <div class="api-status" id="gemini-config-status"></div>
+                    🤖 Google Gemini API
+                </h3>
+                <div class="api-description">
+                    Powers conversational AI and natural language understanding.
+                    <a href="https://aistudio.google.com/app/apikey" target="_blank" class="api-link">Get API Key →</a>
+                </div>
+                <div class="api-input-group">
+                    <input 
+                        type="password" 
+                        id="gemini-key" 
+                        class="api-input" 
+                        placeholder="Enter your Gemini API key"
+                    >
+                </div>
+            </div>
+
+            <div class="api-key-section">
+                <h3>
+                    <div class="api-status" id="openweather-config-status"></div>
+                    🌤️ OpenWeather API
+                </h3>
+                <div class="api-description">
+                    Provides real-time weather data and forecasts worldwide.
+                    <a href="https://openweathermap.org/api" target="_blank" class="api-link">Get API Key →</a>
+                </div>
+                <div class="api-input-group">
+                    <input 
+                        type="password" 
+                        id="openweather-key" 
+                        class="api-input" 
+                        placeholder="Enter your OpenWeather API key"
+                    >
+                </div>
+            </div>
+
+            <div class="api-key-section">
+                <h3>
+                    <div class="api-status" id="tavily-config-status"></div>
+                    🔍 Tavily Search API
+                </h3>
+                <div class="api-description">
+                    Enables web search and real-time news information.
+                    <a href="https://tavily.com" target="_blank" class="api-link">Get API Key →</a>
+                </div>
+                <div class="api-input-group">
+                    <input 
+                        type="password" 
+                        id="tavily-key" 
+                        class="api-input" 
+                        placeholder="Enter your Tavily API key"
+                    >
+                </div>
+            </div>
+
+            <button class="save-settings-btn" onclick="saveApiKeys()">
+                💾 Save Configuration
             </button>
         </div>
     </div>
-    <script src="/static/script.js"></script>
+
+    <script src="/static/enhanced-script.js"></script>
 </body>
 </html>

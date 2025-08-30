@@ -3,7 +3,7 @@
 > A professional-grade AI assistant with voice recognition, text input, and real-world capabilities
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://voice-ai-assistant-n14h.onrender.com)
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge)]
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge)(https://github.com/Moharganguly/voice-ai-assistant)]
 
 ## 🌟 What Makes This Special
 

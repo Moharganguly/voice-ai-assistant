@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 🎙️ Conversational AI Voice Agent
 This project is a fully functional, voice-powered conversational agent built as part of the "30 Days of Voice Agents" challenge. It listens to user voice input, understands the context of the conversation, generates an intelligent response using a Large Language Model (LLM), and speaks the answer back in a natural-sounding voice.
 
@@ -97,4 +97,4 @@ You should now see the voice agent's interface, ready for a conversation!
 =======
 # voice-ai-assistant
 Enhanced Voice AI Assistant v2.0 - Professional voice interface with real-world capabilities
->>>>>>> c3485741795d0ef61d99858486ad87542156677b
+

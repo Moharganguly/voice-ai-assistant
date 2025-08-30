@@ -1,100 +1,95 @@
+# 🎤 Enhanced Voice AI Assistant v2.0
 
-🎙️ Conversational AI Voice Agent
-This project is a fully functional, voice-powered conversational agent built as part of the "30 Days of Voice Agents" challenge. It listens to user voice input, understands the context of the conversation, generates an intelligent response using a Large Language Model (LLM), and speaks the answer back in a natural-sounding voice.
+> A professional-grade AI assistant with voice recognition, text input, and real-world capabilities
 
-✨ Features
-Voice-in, Voice-out Interaction: A seamless conversational loop where the user speaks and the agent speaks back.
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://voice-ai-assistant-n14h.onrender.com)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge)](https://github.com/Moharganguly/voice-ai-assistant)
 
-Real-time Transcription: Uses AssemblyAI for fast and accurate Speech-to-Text (STT).
+## 🌟 What Makes This Special
 
-Intelligent Responses: Powered by Google's Gemini LLM to provide context-aware and intelligent answers.
+This Enhanced Voice AI Assistant v2.0 represents the culmination of a month-long development journey, featuring both **voice recognition AND text input** for universal accessibility across all devices and environments.
 
-Chat History: The agent remembers previous turns in the conversation, allowing for natural, follow-up questions.
+## ✨ Key Features
 
-Natural Voice Output: Uses Google's Gemini Text-to-Speech (TTS) to generate a high-quality, natural-sounding voice for the agent.
+### 🎙️ **Dual Input Methods**
+- **Voice Recognition**: Real-time speech-to-text using Web Speech API
+- **Text Input**: Mobile-optimized typing interface with responsive design
+- **Seamless Switching**: Choose voice or text based on your environment
 
-Robust Error Handling: The application can gracefully handle API failures and provides fallback responses.
+### 🤖 **Advanced AI Capabilities**
+- **Multiple Personas**: Friendly Teacher, Tech Support Specialist, Creative Storyteller
+- **Real-World Integrations**: Live weather, breaking news, web search
+- **Intelligent Conversations**: Context-aware responses with memory
+- **Voice Responses**: High-quality text-to-speech with persona-specific voices
 
-Modern Web Interface: A sleek, responsive UI with a single smart button and an animated chat log.
+### 🌐 **Professional Features**
+- **Real-time Communication**: WebSocket-powered instant messaging
+- **Session Persistence**: Conversation history saved locally
+- **API Key Management**: Secure configuration through settings panel
+- **Cross-Platform**: Works on desktop, mobile, and tablets
+- **Responsive Design**: Beautiful UI that adapts to all screen sizes
 
-🛠️ Tech Stack & Architecture
-This project uses a modern Python backend with a vanilla JavaScript frontend.
+## 🆕 Latest Updates (Day 28-29)
 
-Backend: Python 3 with FastAPI
+### **Enhanced Mobile Experience**
+- ✅ Added responsive text input for mobile users
+- ✅ Fixed mobile landscape mode display issues
+- ✅ Optimized touch interaction and keyboard support
+- ✅ Improved error handling and user feedback
 
-Frontend: HTML, CSS, Vanilla JavaScript
+### **Accessibility Improvements**
+- ✅ Universal input methods (voice + text)
+- ✅ Keyboard shortcuts and navigation
+- ✅ Clear visual feedback for all actions
+- ✅ Graceful fallbacks when voice recognition fails
 
-Speech-to-Text (STT): AssemblyAI API
+## 🚀 Live Demo
 
-Large Language Model (LLM): Google Gemini API
+**Try it now:** [https://voice-ai-assistant-n14h.onrender.com](https://voice-ai-assistant-n14h.onrender.com)
 
-Text-to-Speech (TTS): Google Gemini API
+## 🛠️ Technology Stack
 
-Audio Conversion: FFMPEG
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **Backend**: Python FastAPI with WebSocket support
+- **AI/ML**: Google Gemini API, Web Speech API, Speech Synthesis API
+- **APIs**: OpenWeather API, Tavily Search API
+- **Deployment**: Render.com with GitHub auto-deployment
+- **Storage**: Local Storage for session persistence
 
-🏛️ Architecture Flow
-Frontend (JS): The browser records the user's voice and sends the audio data to the backend.
+## 🎯 How to Use
 
-Backend (FastAPI):
-a. Receives the audio file.
-b. Converts the audio to a compatible WAV format using FFMPEG.
-c. Sends the WAV file to AssemblyAI for transcription.
-d. Retrieves the chat history for the current session from an in-memory store.
-e. Sends the full conversation history plus the new user transcript to the Gemini LLM.
-f. Receives the text response from the LLM and updates the chat history.
-g. Sends the LLM's text response to the Gemini TTS API to generate the voice output.
-h. Returns a JSON object to the frontend containing the final audio URL and the transcripts.
+1. **🎤 Voice Input**: Click the microphone and speak naturally
+2. **💬 Text Input**: Type your message and press Send or Enter
+3. **⚙️ Configure APIs**: Click settings to add your API keys for enhanced features
+4. **🎭 Choose Persona**: Select your preferred AI personality
+5. **📜 View History**: Check past conversations in the history panel
 
-Frontend (JS):
-a. Receives the JSON response.
-b. Updates the chat log with the user's and agent's messages.
-c. Plays the agent's audio response, triggering the next conversational turn.
+## 🏗️ Development Journey
 
-🚀 Getting Started
-Follow these instructions to get a copy of the project up and running on your local machine.
+This project was built as part of the "30 Days of Voice Agents" challenge, evolving from a simple voice interface to a comprehensive AI assistant with:
 
-Prerequisites
-Python 3.8+
+- Professional-grade architecture and security
+- Multiple API integrations for real-world functionality  
+- Universal accessibility across all devices and browsers
+- Production deployment with automatic updates
 
-FFMPEG: You must have FFMPEG installed and accessible from your system's command line. You can download it from ffmpeg.org.
+## 🌈 What's Next
 
-Installation & Setup
-Clone the repository:
+- [ ] Multi-language support
+- [ ] Custom voice training
+- [ ] Advanced conversation analytics
+- [ ] Integration with popular productivity tools
+- [ ] Mobile app development
 
-git clone <your-repo-url>
-cd <your-repo-folder>
+## 🤝 Connect With Me
 
-Install Python dependencies:
+Built with ❤️ by Mohar Ganguly
 
-pip install -r requirements.txt
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin)]([https://linkedin.com/in/moharganguly](https://www.linkedin.com/in/mohar-ganguly-a8a266274/))
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-black?style=for-the-badge&logo=github)](https://github.com/Moharganguly)
 
-Configure Environment Variables:
-You need to get API keys from the following services:
+---
 
-AssemblyAI
+**#VoiceAI #WebDevelopment #AI #FastAPI #JavaScript #FullStack #Day29**
 
-Google AI Studio (for Gemini)
-
-Open the main.py file and replace the placeholder values with your actual keys:
-
-ASSEMBLYAI_API_KEY = "your_assemblyai_api_key"
-GEMINI_API_KEY = "your_google_gemini_api_key" 
-
-Also, ensure the path to your FFMPEG executable is correct for your system:
-
-FFMPEG_PATH = "C:\\ffmpeg\\bin\\ffmpeg.exe" 
-
-Running the Application
-Navigate to the project's root directory in your terminal.
-
-Run the FastAPI server using Uvicorn:
-
-python -m uvicorn main:app --reload
-
-Open your web browser and go to http://127.0.0.1:8000.
-
-You should now see the voice agent's interface, ready for a conversation!
-=======
-# voice-ai-assistant
-Enhanced Voice AI Assistant v2.0 - Professional voice interface with real-world capabilities
-
+> "From concept to deployment - building the future of conversational AI, one feature at a time."

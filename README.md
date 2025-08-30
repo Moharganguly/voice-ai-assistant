@@ -3,7 +3,7 @@
 > A professional-grade AI assistant with voice recognition, text input, and real-world capabilities
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://voice-ai-assistant-n14h.onrender.com)
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge)(https://github.com/Moharganguly/voice-ai-assistant)]
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge)](https://github.com/Moharganguly/voice-ai-assistant)
 
 ## 🌟 What Makes This Special
 
@@ -85,7 +85,7 @@ This project was built as part of the "30 Days of Voice Agents" challenge, evolv
 
 Built with ❤️ by Mohar Ganguly
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin)]([https://linkedin.com/in/moharganguly](https://www.linkedin.com/in/mohar-ganguly-a8a266274/))
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/moharganguly)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-black?style=for-the-badge&logo=github)](https://github.com/Moharganguly)
 
 ---
